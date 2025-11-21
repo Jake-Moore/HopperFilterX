@@ -22,7 +22,9 @@ import com.mrh00k.hopperfilterx.listeners.GameModeChangeListener;
 import com.mrh00k.hopperfilterx.listeners.HopperListener;
 import com.mrh00k.hopperfilterx.managers.DatabaseManager;
 import com.mrh00k.hopperfilterx.managers.MessageManager;
+import com.mrh00k.hopperfilterx.managers.RecipeManager;
 import com.mrh00k.hopperfilterx.utils.Logger;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -31,6 +33,7 @@ public class Main extends JavaPlugin {
   private Logger logger;
   private String PluginVersion;
   private String PluginName;
+  private NamespacedKey filteredHopperKey;
 
   @Override
   public void onEnable() {
@@ -40,6 +43,9 @@ public class Main extends JavaPlugin {
       PluginVersion = getPluginVersion();
 
       PluginName = getPluginName();
+
+      // Initialize the filtered hopper key early
+      filteredHopperKey = new NamespacedKey(this, "filtered_hopper");
 
       logger.info(
           PluginName + " v" + PluginVersion + " is initializing - beginning startup sequence");
@@ -80,6 +86,14 @@ public class Main extends JavaPlugin {
         logger.error("Failed to initialize VersionManager: " + e.getMessage());
       }
 
+      // Register crafting recipes
+      try {
+        RecipeManager.initialize(this, filteredHopperKey);
+        logger.info("RecipeManager initialized - crafting recipe registered");
+      } catch (Exception e) {
+        logger.error("Failed to initialize RecipeManager: " + e.getMessage());
+      }
+
       registerCommands();
 
       registerListeners();
@@ -108,6 +122,14 @@ public class Main extends JavaPlugin {
     if (logger != null) {
       logger.info(
           "Shutting down " + PluginName + " v" + PluginVersion + " - beginning cleanup sequence");
+
+      // Unregister recipes
+      try {
+        RecipeManager.unregisterRecipes();
+        logger.info("Recipes unregistered");
+      } catch (Exception e) {
+        logger.warning("Failed to unregister recipes: " + e.getMessage());
+      }
 
       try {
         DatabaseManager.flushAndSync();

@@ -23,7 +23,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -50,10 +52,16 @@ public class HopperUtils {
 
       meta.getPersistentDataContainer().set(filteredHopperKey, PersistentDataType.BYTE, (byte) 1);
 
+      // Add enchantment glint effect
+      meta.addEnchant(Enchantment.UNBREAKING, 1, true);
+      // Hide the enchantment text but keep the glint
+      meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+
       if (!hopper.setItemMeta(meta)) {
         Logger.getInstance().error("Failed to set item meta for filtered hopper.");
       } else {
-        Logger.getInstance().debug("Successfully created filtered hopper with metadata");
+        Logger.getInstance()
+            .debug("Successfully created filtered hopper with metadata and glint effect");
       }
     } else {
       Logger.getInstance().error("Failed to get item meta for filtered hopper - meta is null");
@@ -161,10 +169,17 @@ public class HopperUtils {
 
       meta.setLore(lore);
 
+      // Ensure enchantment glint is preserved/added
+      if (!meta.hasEnchant(Enchantment.UNBREAKING)) {
+        meta.addEnchant(Enchantment.UNBREAKING, 1, true);
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+      }
+
       if (!item.setItemMeta(meta)) {
         Logger.getInstance().error("Failed to set UUID metadata on filtered hopper");
       } else {
-        Logger.getInstance().debug("Successfully added UUID " + uuid + " to filtered hopper item");
+        Logger.getInstance()
+            .debug("Successfully added UUID " + uuid + " to filtered hopper item with glint");
       }
     } else {
       Logger.getInstance().error("Failed to get item meta when adding UUID to filtered hopper");

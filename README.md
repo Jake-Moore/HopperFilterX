@@ -14,8 +14,10 @@ A lightweight, multilingual Minecraft plugin that lets you filter what hoppers c
 - `/hopper addperm <player> <uuid>`: Grant players access to your filtered hoppers.
 - `/hopper removeperm <player> <uuid>`: Remove player access from your filtered hoppers.
 - `/hopper reload`: Reload the plugin's configuration and language files.
+- ✨ **Visual Distinction**: Filtered hoppers have an enchantment glint effect in item form.
+- 🔨 **Craftable**: Custom recipe using iron, redstone, and a chest (configurable).
 - 🔍 **Filter System**: Shift + right-click a HopperFilterX hopper to open a GUI.
-- 📥 **Drag and Drop Items**: Insert any items into the GUI to define the hopper’s filter.
+- 📥 **Drag and Drop Items**: Insert any items into the GUI to define the hopper's filter.
 - ✅ **Selective Item Movement**: Hopper will only move items matching the filter.
 - 🔄 **Fallback Behavior**: If no filter is defined, it behaves like a regular vanilla hopper.
 - 🧊 **Seamless vanilla integration**: Works with all vanilla mechanics and hoppers.
@@ -51,8 +53,14 @@ The plugin automatically detects the player’s language based on their Minecraf
 
 ## ⚙️ Configuration
 
-- `config.yml` allows enabling debug mode for detailed logging.
-- `lang.yml` contains all translatable messages and can be edited for custom language support.
+**config.yml**
+- `debug.enabled`: Enable/disable debug mode for detailed logging (default: false)
+- `recipe.enabled`: Enable/disable the crafting recipe for filtered hoppers (default: true)
+  - If disabled, filtered hoppers can only be obtained via `/hopper give` command
+
+**lang.yml**
+- Contains all translatable messages and can be edited for custom language support
+- Automatically detects player's language based on their Minecraft client settings
 
 ## 🛠️ Commands
 
@@ -80,11 +88,25 @@ The plugin automatically detects the player’s language based on their Minecraf
 
 ## 🎮 How it Works
 
-1. Use `/hopper give <player> [amount]` to give a player a special hopper.
-2. Place the hopper like any normal one.
-3. **Shift + Right-Click** on it to open the filter GUI.
-4. Add items you want the hopper to accept.
-5. The hopper will now only move the selected items. If the filter is empty, it works like vanilla.
+### Obtaining Filtered Hoppers
+
+**Option 1: Crafting Recipe (Default)**
+```
+[Iron] [Redstone] [Iron]
+[Iron]  [Chest]   [Iron]
+       [Iron]
+```
+Craft a filtered hopper using 5 Iron Ingots, 1 Redstone, and 1 Chest.
+
+**Option 2: Command**
+Use `/hopper give <player> [amount]` to give a player filtered hoppers directly.
+
+### Using Filtered Hoppers
+
+1. **Place** the filtered hopper like any normal hopper.
+2. **Shift + Right-Click** on it to open the filter configuration GUI.
+3. **Add items** you want the hopper to accept into the GUI.
+4. The hopper will now **only move the selected items**. If the filter is empty, it works like vanilla.
 
 ## 🔗 Permission System
 

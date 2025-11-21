@@ -16,27 +16,7 @@ static def getTime() {
 }
 
 // Set version to version property if supplied
-String shortVersion = "0.1.1-BETA-1.21.7-UPDATE"
-if (hasProperty('ver')) {
-    shortVersion = ver.trim()
-    if (shortVersion.toLowerCase().startsWith("v")) {
-        shortVersion = shortVersion.substring(1)
-    }
-    shortVersion = shortVersion.toUpperCase()
-}
-
-if (shortVersion == null || shortVersion == "") {
-    version = getTime() + "-SNAPSHOT"
-} else if (shortVersion.contains("-RC-")) {
-    version = shortVersion.replace("-RC-", "-SNAPSHOT-")
-} else if (shortVersion.contains("-BETA")) {
-    version = shortVersion // ya viene marcado
-} else if (shortVersion.endsWith("B")) {
-    version = shortVersion.substring(0, shortVersion.length() - 1) + "-BETA"
-} else {
-    version = shortVersion
-}
-
+version = "0.1.2-kami"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -53,7 +33,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'org.spigotmc:spigot-api:1.21.7-R0.1-SNAPSHOT'
+    compileOnly 'org.spigotmc:spigot-api:1.21.10-R0.1-SNAPSHOT'
     compileOnly 'com.github.spotbugs:spotbugs-annotations:4.9.3'
     implementation 'org.xerial:sqlite-jdbc:3.41.2.1'
     spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.14.0'

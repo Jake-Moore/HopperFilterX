@@ -39,6 +39,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 public class HopperCommand implements CommandExecutor, TabCompleter {
   private final Logger logger = Logger.getInstance();
@@ -50,7 +51,11 @@ public class HopperCommand implements CommandExecutor, TabCompleter {
   }
 
   @Override
-  public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+  public boolean onCommand(
+      @NotNull CommandSender sender,
+      @NotNull Command command,
+      @NotNull String label,
+      @NotNull String[] args) {
     try {
       if (args.length == 0) {
         sender.sendMessage(MessageManager.getInstance().getMessage("command.usage"));
@@ -98,7 +103,10 @@ public class HopperCommand implements CommandExecutor, TabCompleter {
 
   @Override
   public java.util.List<String> onTabComplete(
-      CommandSender sender, Command command, String alias, String[] args) {
+      CommandSender sender,
+      @NotNull Command command,
+      @NotNull String alias,
+      @NotNull String[] args) {
     List<String> completions = new ArrayList<>();
 
     // Solo operadores pueden ver los tabs de operador

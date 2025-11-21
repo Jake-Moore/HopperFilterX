@@ -10,3 +10,16 @@ debug:
   # Enable/disable debug mode for complete logging output
   # When enabled, all debug messages will be displayed
   enabled: false
+
+# Recipe Configuration
+recipe:
+  # Enable/disable the crafting recipe for filtered hoppers
+  # If disabled, filtered hoppers can only be obtained via /hopper give command
+  enabled: true
+  
+  # Recipe pattern: Standard hopper recipe but with redstone in top center
+  # I = Iron Ingot, R = Redstone, C = Chest
+  # Pattern:
+  #   I R I
+  #   I C I
+  #     I
